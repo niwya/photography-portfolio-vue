@@ -5,14 +5,20 @@
         :onInit="onInit"
         :onBeforeSlide="onBeforeSlide"
     >
-        <a
-            v-for="item in items"
-            :key="item.id"
-            className="gallery-item"
-            :data-src="item.src"
+        <div
+            v-for="(galleryRow, index) in items"
+            :key="index"
+            class="gallery-row"
         >
-            <img className="img-responsive" :src="item.src" />
-        </a>
+            <a
+                v-for="galleryItem in galleryRow"
+                :key="galleryItem.id"
+                className="gallery-item"
+                :data-src="galleryItem.src"
+            >
+                <img className="img-responsive" :src="galleryItem.src" />
+            </a>
+        </div>
     </lightgallery>
 </template>
 
@@ -52,6 +58,7 @@ export default {
 <style lang="css">
 @import url("https://cdn.jsdelivr.net/npm/lightgallery@2.1.0-beta.1/css/lightgallery.css");
 @import url("https://cdn.jsdelivr.net/npm/lightgallery@2.1.0-beta.1/css/lg-zoom.css");
+
 body {
     margin: 0;
 }
@@ -61,14 +68,20 @@ body {
     flex-direction: column;
 }
 
-.gallery img {
+.gallery .gallery-row {
+    display: flex;
+    flex-direction: row;
     width: 95%;
     max-width: 1200px;
     height: auto;
     margin: 0 auto;
 }
 
-.gallery-item {
+.gallery .gallery-row .gallery-item {
     margin: 5px;
+}
+
+.gallery img {
+    width: 100%;
 }
 </style>
