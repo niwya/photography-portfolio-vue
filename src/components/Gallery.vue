@@ -1,5 +1,6 @@
 <template>
     <lightgallery
+        class="gallery"
         :settings="{ speed: 150, plugins: plugins }"
         :onInit="onInit"
         :onBeforeSlide="onBeforeSlide"
@@ -10,7 +11,7 @@
             className="gallery-item"
             :data-src="item.src"
         >
-            <img className="img-responsive" :src="item.thumb" />
+            <img className="img-responsive" :src="item.src" />
         </a>
     </lightgallery>
 </template>
@@ -54,6 +55,19 @@ export default {
 body {
     margin: 0;
 }
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery img {
+    width: 95%;
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto;
+}
+
 .gallery-item {
     margin: 5px;
 }
