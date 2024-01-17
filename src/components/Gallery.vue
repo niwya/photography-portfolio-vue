@@ -1,23 +1,27 @@
 <template>
     <lightgallery
         class="gallery"
-        :settings="{ speed: 150, plugins: plugins }"
+        :settings="gallerySettings"
         :onInit="onInit"
         :onBeforeSlide="onBeforeSlide"
     >
-        <div
-            v-for="(galleryRow, index) in items"
-            :key="index"
-            class="gallery-row"
-        >
-            <a
-                v-for="galleryItem in galleryRow"
-                :key="galleryItem.id"
-                className="gallery-item"
-                :data-src="galleryItem.src"
+        <div>
+            <h1>Light Gallery</h1>
+
+            <div
+                v-for="galleryRow in items"
+                :key="galleryRow.id"
+                class="gallery-row"
             >
-                <img className="img-responsive" :src="galleryItem.src" />
-            </a>
+                <a
+                    v-for="(galleryItem, itemIndex) in galleryRow"
+                    :data-src="galleryItem.src"
+                    :key="itemIndex"
+                    class="gallery-item"
+                >
+                    <img className="img-responsive" :src="galleryItem.src" />
+                </a>
+            </div>
         </div>
     </lightgallery>
 </template>
@@ -29,25 +33,24 @@ import lgZoom from "lightgallery/plugins/zoom";
 import galeryItems from "@/assets/gallery-items.json";
 
 let lightGallery = null;
+
 export default {
     name: "App",
     components: {
         Lightgallery,
     },
-    watch: {
-        items(newVal, oldVal) {
-            this.$nextTick(() => {
-                lightGallery.refresh();
-            });
-        },
-    },
     data: () => ({
-        plugins: [lgZoom],
         items: galeryItems,
+        gallerySettings: {
+            speed: 150,
+            plugins: [lgZoom],
+            selector: ".gallery-item",
+        },
     }),
     methods: {
         onInit: (detail) => {
             lightGallery = detail.instance;
+            console.log("LightGallery initialized", lightGallery);
         },
         onBeforeSlide: () => {
             console.log("calling before slide");
@@ -81,7 +84,7 @@ body {
     margin: 5px;
 }
 
-.gallery img {
+.gallery-item img {
     width: 100%;
 }
 </style>
