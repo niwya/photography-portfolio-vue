@@ -18,8 +18,13 @@
                     :data-src="galleryItem.src"
                     :key="itemIndex"
                     class="gallery-item"
+                    :style="`--r: ${galleryItem.ratio}`"
                 >
-                    <img className="img-responsive" :src="galleryItem.src" />
+                    <img
+                        className="img-responsive"
+                        :src="galleryItem.src"
+                        @load="updateRatio($event, galleryItem)"
+                    />
                 </a>
             </div>
         </div>
@@ -55,6 +60,10 @@ export default {
         onBeforeSlide: () => {
             console.log("calling before slide");
         },
+        updateRatio(event, galleryItem) {
+            const img = event.target;
+            galleryItem.ratio = img.naturalWidth / img.naturalHeight;
+        },
     },
 };
 </script>
@@ -82,9 +91,11 @@ body {
 
 .gallery .gallery-row .gallery-item {
     margin: 5px;
+    flex-grow: calc(var(--r));
+    flex-basis: 0;
 }
 
 .gallery-item img {
-    width: 100%;
+    max-width: 100%;
 }
 </style>
