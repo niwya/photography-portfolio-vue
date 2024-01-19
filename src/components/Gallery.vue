@@ -5,28 +5,24 @@
         :onInit="onInit"
         :onBeforeSlide="onBeforeSlide"
     >
-        <div>
-            <h1>Light Gallery</h1>
-
-            <div
-                v-for="galleryRow in items"
-                :key="galleryRow.id"
-                class="gallery-row"
+        <div
+            v-for="galleryRow in items"
+            :key="galleryRow.id"
+            class="gallery-row"
+        >
+            <a
+                v-for="(galleryItem, itemIndex) in galleryRow"
+                :data-src="galleryItem.src"
+                :key="itemIndex"
+                class="gallery-item"
+                :style="`--r: ${galleryItem.ratio}`"
             >
-                <a
-                    v-for="(galleryItem, itemIndex) in galleryRow"
-                    :data-src="galleryItem.src"
-                    :key="itemIndex"
-                    class="gallery-item"
-                    :style="`--r: ${galleryItem.ratio}`"
-                >
-                    <img
-                        className="img-responsive"
-                        :src="galleryItem.src"
-                        @load="updateRatio($event, galleryItem)"
-                    />
-                </a>
-            </div>
+                <img
+                    className="img-responsive"
+                    :src="galleryItem.src"
+                    @load="updateRatio($event, galleryItem)"
+                />
+            </a>
         </div>
     </lightgallery>
 </template>
@@ -82,20 +78,26 @@ body {
 
 .gallery .gallery-row {
     display: flex;
-    flex-direction: row;
     width: 95%;
     max-width: 1200px;
     height: auto;
     margin: 0 auto;
+
+    flex-direction: row;
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 }
 
 .gallery .gallery-row .gallery-item {
-    margin: 5px;
+    /* margin: 5px; */
+    padding: 15px;
     flex-grow: calc(var(--r));
     flex-basis: 0;
 }
 
 .gallery-item img {
     max-width: 100%;
+    box-shadow: 0 10px 20px -4px rgba(0, 0, 0, 0.6);
 }
 </style>
