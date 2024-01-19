@@ -35,7 +35,6 @@ import lgHash from "lightgallery/plugins/hash";
 import lgFullscreen from "lightgallery/plugins/fullscreen";
 import lgAutoplay from "lightgallery/plugins/autoplay";
 import lgThumbnail from "lightgallery/plugins/thumbnail";
-// import lgPager from "lightgallery/plugins/pager";
 
 import galeryItems from "@/assets/gallery-items.json";
 
@@ -50,7 +49,7 @@ export default {
         items: galeryItems,
         gallerySettings: {
             speed: 350,
-            plugins: [lgHash, lgZoom, lgFullscreen, lgAutoplay, lgThumbnail], // lgPager
+            plugins: [lgHash, lgZoom, lgFullscreen, lgAutoplay, lgThumbnail],
             selector: ".gallery-item",
             mode: "lg-lollipop",
             mousewheel: true,
@@ -78,7 +77,6 @@ export default {
 @import "lightgallery/css/lg-transitions.css";
 @import "lightgallery/css/lg-autoplay.css";
 @import "lightgallery/css/lg-thumbnail.css";
-/* @import "lightgallery/css/lg-pager.css"; */
 
 body {
     margin: 0;
