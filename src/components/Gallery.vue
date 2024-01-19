@@ -17,6 +17,7 @@
                 class="gallery-item"
                 :style="`--r: ${galleryItem.ratio}`"
                 :data-lg-size="galleryItem.size"
+                :data-sub-html="galleryItem.subHtml"
             >
                 <img
                     className="img-responsive"
@@ -53,6 +54,7 @@ export default {
             selector: ".gallery-item",
             mode: "lg-lollipop",
             mousewheel: true,
+            thumbMargin: 5,
         },
     }),
     methods: {
@@ -77,6 +79,11 @@ export default {
 @import "lightgallery/css/lg-transitions.css";
 @import "lightgallery/css/lg-autoplay.css";
 @import "lightgallery/css/lg-thumbnail.css";
+
+/* TODO - Remove border on thumbnails, accept when hovered */
+/* .lg-outer .lg-thumb-item {
+    border: 0px;
+} */
 
 body {
     margin: 0;
