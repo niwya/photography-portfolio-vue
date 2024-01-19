@@ -16,6 +16,7 @@
                 :key="itemIndex"
                 class="gallery-item"
                 :style="`--r: ${galleryItem.ratio}`"
+                :data-lg-size="galleryItem.size"
             >
                 <img
                     className="img-responsive"
@@ -30,6 +31,11 @@
 <script>
 import Lightgallery from "lightgallery/vue";
 import lgZoom from "lightgallery/plugins/zoom";
+import lgHash from "lightgallery/plugins/hash";
+import lgFullscreen from "lightgallery/plugins/fullscreen";
+import lgAutoplay from "lightgallery/plugins/autoplay";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+// import lgPager from "lightgallery/plugins/pager";
 
 import galeryItems from "@/assets/gallery-items.json";
 
@@ -43,9 +49,11 @@ export default {
     data: () => ({
         items: galeryItems,
         gallerySettings: {
-            speed: 150,
-            plugins: [lgZoom],
+            speed: 350,
+            plugins: [lgHash, lgZoom, lgFullscreen, lgAutoplay, lgThumbnail], // lgPager
             selector: ".gallery-item",
+            mode: "lg-slide-skew",
+            mousewheel: true,
         },
     }),
     methods: {
@@ -64,8 +72,13 @@ export default {
 };
 </script>
 <style lang="css">
-@import url("https://cdn.jsdelivr.net/npm/lightgallery@2.1.0-beta.1/css/lightgallery.css");
-@import url("https://cdn.jsdelivr.net/npm/lightgallery@2.1.0-beta.1/css/lg-zoom.css");
+@import "lightgallery/css/lightgallery.css";
+@import "lightgallery/css/lg-zoom.css";
+@import "lightgallery/css/lg-fullscreen.css";
+@import "lightgallery/css/lg-transitions.css";
+@import "lightgallery/css/lg-autoplay.css";
+@import "lightgallery/css/lg-thumbnail.css";
+/* @import "lightgallery/css/lg-pager.css"; */
 
 body {
     margin: 0;
