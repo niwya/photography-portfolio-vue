@@ -52,7 +52,7 @@ export default {
             speed: 350,
             plugins: [lgHash, lgZoom, lgFullscreen, lgAutoplay, lgThumbnail], // lgPager
             selector: ".gallery-item",
-            mode: "lg-slide-skew",
+            mode: "lg-lollipop",
             mousewheel: true,
         },
     }),
