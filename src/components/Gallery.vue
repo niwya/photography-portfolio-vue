@@ -37,6 +37,8 @@ import lgFullscreen from "lightgallery/plugins/fullscreen";
 import lgAutoplay from "lightgallery/plugins/autoplay";
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 
+import ExifReader from "exifreader";
+
 import galeryItems from "@/assets/gallery-items.json";
 
 let lightGallery = null;
@@ -67,7 +69,19 @@ export default {
         },
         updateRatio(event, galleryItem) {
             const img = event.target;
+
+            // Read the width and height of the image
             galleryItem.ratio = img.naturalWidth / img.naturalHeight;
+
+            // Read the EXIF data
+            // WARNING - This loads the image again, so it's very not efficient
+            ExifReader.load(img.src, { async: true })
+                .then(function (tags) {
+                    console.log(tags);
+                })
+                .catch(function (error) {
+                    // Handle error.
+                });
         },
     },
 };
