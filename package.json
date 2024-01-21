@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "exifreader": "^4.20.0",
+    "firebase": "^10.7.2",
     "lightgallery": "^2.7.2",
     "vue": "^3.2.13"
   },
