@@ -21,7 +21,7 @@
             >
                 <img
                     className="img-responsive"
-                    :src="galleryItem.src"
+                    :src="galleryItem.thumb"
                     @load="updateRatio($event, galleryItem, galleryRow.length)"
                 />
             </a>
