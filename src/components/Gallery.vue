@@ -126,10 +126,17 @@ export default {
 @import "lightgallery/css/lg-autoplay.css";
 @import "lightgallery/css/lg-thumbnail.css";
 
-/* TODO - Remove border on thumbnails, accept when hovered */
-/* .lg-outer .lg-thumb-item {
-    border: 0px;
-} */
+/* Override the default lightgallery styles from the import above */
+@media screen and (min-width: 768px) {
+    .lg-outer .lg-thumb-item {
+        border: 2px solid #ffffff00;
+    }
+    .lg-outer .lg-thumb-item.active,
+    .lg-outer .lg-thumb-item:hover {
+        border-width: 2px;
+        border-color: #fff;
+    }
+}
 
 body {
     margin: 0;
