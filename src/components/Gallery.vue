@@ -22,7 +22,7 @@
                 <img
                     className="img-responsive"
                     :src="galleryItem.src"
-                    @load="updateRatio($event, galleryItem)"
+                    @load="updateRatio($event, galleryItem, galleryRow)"
                 />
             </a>
         </div>
@@ -67,23 +67,55 @@ export default {
         onBeforeSlide: () => {
             console.log("calling before slide");
         },
-        updateRatio(event, galleryItem) {
+        loadImage(galleryItem) {
+            fetch(galleryItem.src)
+                .then((response) => response.blob())
+                .then((blob) => {
+                    // Create a Blob URL for the image
+                    galleryItem.blobUrl = URL.createObjectURL(blob);
+
+                    // Read EXIF data
+                    ExifReader.load(blob, { expanded: true })
+                        .then((tags) => {
+                            console.log(tags);
+                            // Process EXIF data here
+                        })
+                        .catch((error) => {
+                            // Handle error for EXIF extraction
+                        });
+                })
+                .catch((error) => {
+                    // Handle error for image fetching
+                });
+        },
+        updateRatio(event, galleryItem, galleryRow) {
             const img = event.target;
 
             // Read the width and height of the image
             galleryItem.ratio = img.naturalWidth / img.naturalHeight;
+            galleryItem.ratio =
+                galleryRow.length === 1
+                    ? 1
+                    : img.naturalWidth / img.naturalHeight;
 
             // Read the EXIF data
             // WARNING - This loads the image again, so it's very not efficient
-            ExifReader.load(img.src, { async: true })
-                .then(function (tags) {
-                    console.log(tags);
-                })
-                .catch(function (error) {
-                    // Handle error.
-                });
+            // ExifReader.load(img.src, { async: true })
+            //     .then(function (tags) {
+            //         console.log(tags);
+            //     })
+            //     .catch(function (error) {
+            //         // Handle error.
+            //     });
         },
     },
+    // created() {
+    //     this.items.forEach((galleryRow) => {
+    //         galleryRow.forEach((galleryItem) => {
+    //             this.loadImage(galleryItem);
+    //         });
+    //     });
+    // },
 };
 </script>
 <style lang="css">
@@ -122,10 +154,10 @@ body {
 }
 
 .gallery .gallery-row .gallery-item {
-    /* margin: 5px; */
-    padding: 15px;
-    flex-grow: calc(var(--r));
+    margin: 15px;
+    flex-grow: var(--r);
     flex-basis: 0;
+    cursor: zoom-in;
 }
 
 .gallery-item img {
