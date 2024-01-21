@@ -29,15 +29,17 @@
     </lightgallery>
 </template>
 
-<script>
+<script lang="ts">
 import Lightgallery from "lightgallery/vue";
+import { InitDetail } from "lightgallery/lg-events";
+
 import lgZoom from "lightgallery/plugins/zoom";
 import lgHash from "lightgallery/plugins/hash";
 import lgFullscreen from "lightgallery/plugins/fullscreen";
 import lgAutoplay from "lightgallery/plugins/autoplay";
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 
-import ExifReader from "exifreader";
+// import ExifReader from "exifreader";
 
 import galeryItems from "@/assets/gallery-items.json";
 
@@ -60,34 +62,34 @@ export default {
         },
     }),
     methods: {
-        onInit: (detail) => {
+        onInit: (detail: InitDetail) => {
             lightGallery = detail.instance;
             console.log("LightGallery initialized", lightGallery);
         },
         onBeforeSlide: () => {
             console.log("calling before slide");
         },
-        loadImage(galleryItem) {
-            fetch(galleryItem.src)
-                .then((response) => response.blob())
-                .then((blob) => {
-                    // Create a Blob URL for the image
-                    galleryItem.blobUrl = URL.createObjectURL(blob);
+        // loadImage(galleryItem) {
+        //     fetch(galleryItem.src)
+        //         .then((response) => response.blob())
+        //         .then((blob) => {
+        //             // Create a Blob URL for the image
+        //             galleryItem.blobUrl = URL.createObjectURL(blob);
 
-                    // Read EXIF data
-                    ExifReader.load(blob, { expanded: true })
-                        .then((tags) => {
-                            console.log(tags);
-                            // Process EXIF data here
-                        })
-                        .catch((error) => {
-                            // Handle error for EXIF extraction
-                        });
-                })
-                .catch((error) => {
-                    // Handle error for image fetching
-                });
-        },
+        //             // Read EXIF data
+        //             ExifReader.load(blob, { expanded: true })
+        //                 .then((tags) => {
+        //                     console.log(tags);
+        //                     // Process EXIF data here
+        //                 })
+        //                 .catch((error) => {
+        //                     // Handle error for EXIF extraction
+        //                 });
+        //         })
+        //         .catch((error) => {
+        //             // Handle error for image fetching
+        //         });
+        // },
         updateRatio(event, galleryItem, galleryRow) {
             const img = event.target;
 
