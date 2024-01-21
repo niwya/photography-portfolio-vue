@@ -6,8 +6,8 @@
         :onBeforeSlide="onBeforeSlide"
     >
         <div
-            v-for="galleryRow in items"
-            :key="galleryRow.id"
+            v-for="(galleryRow, rowIndex) in items"
+            :key="rowIndex"
             class="gallery-row"
         >
             <a
@@ -22,7 +22,7 @@
                 <img
                     className="img-responsive"
                     :src="galleryItem.src"
-                    @load="updateRatio($event, galleryItem, galleryRow)"
+                    @load="updateRatio($event, galleryItem, galleryRow.length)"
                 />
             </a>
         </div>
@@ -45,13 +45,21 @@ import galeryItems from "@/assets/gallery-items.json";
 
 let lightGallery = null;
 
+interface GalleryItem {
+    src: string;
+    thumb: string;
+    ratio?: number;
+    size?: string;
+    subHtml?: string;
+}
+
 export default {
     name: "App",
     components: {
         Lightgallery,
     },
     data: () => ({
-        items: galeryItems,
+        items: galeryItems as GalleryItem[][],
         gallerySettings: {
             speed: 350,
             plugins: [lgHash, lgZoom, lgFullscreen, lgAutoplay, lgThumbnail],
@@ -90,13 +98,17 @@ export default {
         //             // Handle error for image fetching
         //         });
         // },
-        updateRatio(event, galleryItem, galleryRow) {
-            const img = event.target;
+        updateRatio(
+            event: Event,
+            galleryItem: GalleryItem,
+            galleryRowLength: number
+        ) {
+            const img = event.target as HTMLImageElement;
 
             // Read the width and height of the image
             galleryItem.ratio = img.naturalWidth / img.naturalHeight;
             galleryItem.ratio =
-                galleryRow.length === 1
+                galleryRowLength === 1
                     ? 1
                     : img.naturalWidth / img.naturalHeight;
 
